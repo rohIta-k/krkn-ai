@@ -103,7 +103,9 @@ class KrknRunner:
         else:
             raise NotImplementedError("Scenario unable to run")
 
-        health_check_watcher = HealthCheckWatcher(self.config.health_checks)
+        health_check_watcher = HealthCheckWatcher(
+            self.config.health_checks, self.config.parameters
+        )
 
         # Run command and fetch result
         if env_is_truthy("MOCK_RUN"):
@@ -111,10 +113,10 @@ class KrknRunner:
             time.sleep(rng.randint(1, 3))
             log, returncode = "", 0
         else:
-            # Start watching application urls for health checks
-            health_check_watcher.run()
-
             try:
+                # Start watching application urls for health checks
+                health_check_watcher.run()
+
                 # Run command (show logs when verbose mode is enabled)
                 log, returncode = run_shell(
                     self.process_es_env_string(command, True),
