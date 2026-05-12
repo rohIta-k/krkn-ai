@@ -93,7 +93,7 @@ case "$MODE_LOWER" in
             exit 1
         fi
 
-        # Build the command
+        # Build the command array
         CMD=(krkn_ai run --config "$CONFIG_FILE" --output "$OUTPUT_DIR" --kubeconfig "$KUBECONFIG")
 
         # Add optional parameters
