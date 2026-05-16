@@ -157,6 +157,7 @@ output:
 
 # Fitness function configuration
 fitness_function:
+  # Query must return exactly one Prometheus series; aggregate fan-out metrics.
   query: 'sum(kube_pod_container_status_restarts_total{namespace="robot-shop"})'
   type: point  # or 'range'
   include_krkn_failure: true
