@@ -135,6 +135,7 @@ class GeneticAlgorithm:
         self.start_time = datetime.datetime.now(datetime.timezone.utc)
         start_time = time.time()
         cur_generation = 0
+        self.completed_generations = cur_generation
 
         # Establish baseline by running dummy scenario to evaluate cluster health, fitness score before chaos testing
         self.run_baseline()
@@ -193,6 +194,7 @@ class GeneticAlgorithm:
 
             # Increment generation counter after evaluation
             cur_generation += 1
+            self.completed_generations = cur_generation
 
             # Check stopping criteria after fitness evaluation (for fitness threshold, saturation, and exploration)
             elapsed_after_eval = time.time() - start_time
