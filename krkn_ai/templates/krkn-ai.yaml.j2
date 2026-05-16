@@ -38,7 +38,7 @@ elastic:
 
 
 fitness_function:
-  # Query must return exactly one Prometheus series; aggregate fan-out metrics.
+  # Aggregate the query so it returns one Prometheus series.
   query: 'sum(kube_pod_container_status_restarts_total)'
   type: point
   include_krkn_failure: true

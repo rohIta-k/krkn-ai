@@ -508,8 +508,8 @@ class KrknRunner:
             raise FitnessFunctionCalculationError(
                 f"Prometheus returned {len(series_with_values)} series for query "
                 f"'{query}' during {context}. Fitness queries must return exactly "
-                "one series. Aggregate fan-out queries with PromQL functions such "
-                "as sum(), max(), or avg()."
+                "one series. Use sum(), max(), avg(), or another PromQL aggregate "
+                "before using this query as a fitness function."
             )
         return series_with_values[0]["values"][-1][1]
 
@@ -520,8 +520,6 @@ class KrknRunner:
 
         config.fitness_function.query can specify a dynamic "$range$" parameter that will be replaced
         when calling below function.
-        Fitness queries must return exactly one Prometheus series. Aggregate metrics
-        that fan out by labels with PromQL functions such as sum(), max(), or avg().
         """
         logger.debug("Calculating Range Fitness")
 
@@ -551,7 +549,7 @@ class KrknRunner:
             self._extract_single_prometheus_value(
                 result,
                 query,
-                f"range fitness in range [{start}, {end}]",
+                f"range fitness [{start}, {end}]",
                 no_data_error,
             )
         )
