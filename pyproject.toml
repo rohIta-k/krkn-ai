@@ -37,6 +37,7 @@ dev = [
   "coverage",
   "notebook",
   "jupyterlab",
+  "beautifulsoup4",
 ]
 
 [tool.setuptools.packages.find]
