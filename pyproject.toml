@@ -31,9 +31,9 @@ krkn_ai = "krkn_ai.cli:main"
 
 [project.optional-dependencies]
 dev = [
-  "pre-commit",
-  "ruff",
-  "mypy",
+  "pre-commit==4.3.0",
+  "ruff==0.14.14",
+  "mypy==1.19.1",
   "pytest",
   "coverage",
   "notebook",

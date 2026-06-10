@@ -27,13 +27,22 @@ An intelligent chaos engineering framework that uses genetic algorithms to evolv
 
 ## 🚀 Getting Started
 
-### Install
+### Install from source
 
 ```bash
 pip install uv
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
-uv run krkn_ai --help
+krkn_ai --help
+```
+
+### Install from GitHub
+
+```bash
+pip install uv
+uv venv --python 3.11 && source .venv/bin/activate
+uv pip install "krkn-ai @ git+https://github.com/krkn-chaos/krkn-ai.git"
+krkn_ai --help
 ```
 
 ### Deploy Sample Microservice
@@ -57,7 +66,7 @@ export HOST="http://$(kubectl get service rs -o json | jq -r '.status.loadBalanc
 Use the `discover` command to auto-generate a config from your running cluster:
 
 ```bash
-uv run krkn_ai discover \
+krkn_ai discover \
   -k ./tmp/kubeconfig.yaml \
   -n "robot-shop" \
   -pl "service" \
@@ -102,7 +111,7 @@ See the full config reference in the [docs](https://krkn-chaos.dev/docs/krkn_ai/
 ### Run Experiments
 
 ```bash
-uv run krkn_ai run \
+krkn_ai run \
   -c ./tmp/krkn-ai.yaml \
   -o ./tmp/results/ \
   -p HOST=$HOST
@@ -137,14 +146,14 @@ The `-n`, `-pl`, `-nl`, and `--skip-pod-name` options support flexible pattern m
 Launch live monitoring alongside an experiment:
 
 ```bash
-uv run krkn_ai run -c ./tmp/krkn-ai.yaml -o ./tmp/results/ --monitoring
+krkn_ai run -c ./tmp/krkn-ai.yaml -o ./tmp/results/ --monitoring
 # use --port 9000 to change from the default 8501
 ```
 
 View results from a completed run:
 
 ```bash
-uv run krkn_ai monitor -o ./tmp/results/
+krkn_ai monitor -o ./tmp/results/
 ```
 
 ## 📁 Output Structure
@@ -175,7 +184,7 @@ results/
 
 ```bash
 source .venv/bin/activate
-uv pip install -r requirements-dev.txt
+uv pip install -e .[dev]
 pre-commit install
 ```
 3. Run static checks before committing:
