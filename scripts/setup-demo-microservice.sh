@@ -68,14 +68,15 @@ cd $repo_dir
 echo "Switched to cloned directory: $PWD"
 
 # Setup Namespace
-kubectl get ns $namespace || kubectl create ns $namespace
-
 if [ "$is_openshift" = "true" ]; then
     # Based on https://github.com/instana/robot-shop/tree/master/OpenShift
     echo "OpenShift cluster detected: $is_openshift"
-    oc adm new-project $namespace
+    oc get project "$namespace" >/dev/null 2>&1 || \oc adm new-project $namespace
     oc adm policy add-scc-to-user anyuid -z default -n $namespace
     oc adm policy add-scc-to-user privileged -z default -n $namespace
+
+else
+    kubectl get ns $namespace || kubectl create ns $namespace
 fi
 
 # Post-renderer to redirect hardcoded redis/rabbitmq images to the mirror registry
