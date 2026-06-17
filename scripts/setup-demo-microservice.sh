@@ -17,6 +17,9 @@
 # - User should be already logged into cluster before running the script
 #
 #******************************************************************************
+
+set -e
+
 detect_openshift() {
     if kubectl get clusterversion &>/dev/null; then
         echo "true"
@@ -43,7 +46,9 @@ mkdir -p $temp_dir
 # Trap for exit signals and errors
 trap cleanup EXIT
 
+post_renderer=""
 cleanup() {
+  [ -n "$post_renderer" ] && rm -f "$post_renderer"
   echo "Script finished."
 }
 
@@ -90,5 +95,3 @@ helm upgrade -i $chart_name \
   --post-renderer "$post_renderer" \
   --namespace "$namespace" .
 echo "Installed helm chart '$chart_name' in namespace '$namespace'"
-
-rm -f "$post_renderer"
