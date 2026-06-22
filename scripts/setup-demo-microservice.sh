@@ -43,14 +43,14 @@ infra_registry="mirror.gcr.io/library" # mirror for Docker Hub official images (
 temp_dir="./tmp"
 mkdir -p $temp_dir
 
-# Trap for exit signals and errors
-trap cleanup EXIT
-
 post_renderer=""
 cleanup() {
   [ -n "$post_renderer" ] && rm -f "$post_renderer"
   echo "Script finished."
 }
+
+# Trap for exit signals and errors
+trap cleanup EXIT
 
 # Switch to the temporary directory
 cd "$temp_dir"
@@ -71,9 +71,9 @@ echo "Switched to cloned directory: $PWD"
 if [ "$is_openshift" = "true" ]; then
     # Based on https://github.com/instana/robot-shop/tree/master/OpenShift
     echo "OpenShift cluster detected: $is_openshift"
-    oc get project "$namespace" >/dev/null 2>&1 || \oc adm new-project $namespace
-    oc adm policy add-scc-to-user anyuid -z default -n $namespace
-    oc adm policy add-scc-to-user privileged -z default -n $namespace
+    oc get project $namespace >/dev/null 2>&1 || oc adm new-project $namespace
+    oc adm policy add-scc-to-user anyuid -z default -n $namespace || true
+    oc adm policy add-scc-to-user privileged -z default -n $namespace || true
 
 else
     kubectl get ns $namespace || kubectl create ns $namespace
