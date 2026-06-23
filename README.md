@@ -60,12 +60,14 @@ kubectl config set-context --current --namespace=$DEMO_NAMESPACE
 
 ```bash
 # Test Endpoints
+
 # For clusters that provide a LoadBalancer hostname
 export HOST="http://$(kubectl get service rs -o json | jq -r '.status.loadBalancer.ingress[0].hostname')"
 ./scripts/test-nginx-routes.sh
 
-#For local environments, where a LoadBalancer hostname may not be available:
+#For local environments, where a LoadBalancer hostname may not be available
 kubectl port-forward svc/rs 8080:80 -n robot-shop
+# In a separate terminal
 export HOST=http://localhost:8080
 ./scripts/test-nginx-routes.sh
 ```
