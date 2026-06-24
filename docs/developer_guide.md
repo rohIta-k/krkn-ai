@@ -32,13 +32,34 @@ uv run krkn_ai --help
 
 We use [Minikube](https://minikube.sigs.k8s.io/docs/start/) to create a local Kubernetes cluster.
 
+### Install Minikube
+
+**Linux:**
 ```bash
-# Install Minikube on Linux
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+```
 
-# Create the cluster
+**macOS (Apple Silicon / Intel):**
+```bash
+brew install minikube
+```
+
+### Create the Cluster
+
+**Linux:**
+```bash
 minikube start
+```
+
+**macOS:**
+
+The recommended driver on macOS is [vfkit](https://github.com/crc-org/vfkit), a lightweight hypervisor that avoids Docker driver limitations (port forwarding, multi-node support). See the [minikube vfkit driver docs](https://minikube.sigs.k8s.io/docs/drivers/vfkit/) for more details.
+
+```bash
+brew install vfkit
+minikube start --driver=vfkit
+```
 
 # Switch to minikube cluster context
 kubectl config use-context minikube
