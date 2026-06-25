@@ -221,20 +221,20 @@ def monitor(ctx, output: str, port: int):
 @click.option(
     "--namespace",
     "-n",
-    help="Namespace(s) to discover components in. Supports Regex and comma separated values.",
+    help="Namespace(s) to discover components in. Supports wildcard (*), regex and comma separated values.",
     default="*",
 )
 @click.option(
     "--pod-label",
     "-pl",
-    help="Pod Label Keys(s) to filter. Supports Regex and comma separated values.",
+    help="Pod Label Keys(s) to filter. Supports wildcard (*), regex and comma separated values.",
     default="*",
     required=False,
 )
 @click.option(
     "--node-label",
     "-nl",
-    help="Node Label Keys(s) to filter. Supports Regex and comma separated values.",
+    help="Node Label Keys(s) to filter. Supports wildcard (*), regex and comma separated values.",
     default="*",
     required=False,
 )
